@@ -10,24 +10,12 @@ Upload a receptor-ligand complex PDB file.
 And define the required parameters.
 </p>
 
-<form method="post" action="/mmpbsa/index/">
-  <br>Specify Your Ligand Residue Code in PDB</br>
-  <input type="text" name="ligand"><br>
-  Dielectric Constant For Solvent (generally 1.0-4.0)
-  <input type="text" name="pdie"><br>
-  <p>Select MD Force Field For Protein/Nucleotides </p>
-  <input type="radio" name="ff" value="99sb" checked> Amber99SB<br>
-  <input type="radio" name="ff" value="99sbildn"> Amber99SBildn<br>
-  <input type="radio" name="ff" value="14"> Amber14 <br>
-  <input type="submit" value="Submit">
-</form>
+<form action="/mmpbsa/parameters" method="post">
+    {% csrf_token %}
+    {{ form }}
 
-<form action="result.html" method="post">
-    <label for="your_name">Your name: </label>
-    <input id="your_name" type="text" name="your_name" value="{{ current_name }}">
-    <input type="submit" value="OK">
+    <input type="submit" value="Submit" />
 </form>
-
 
 <p>Results could be find here. </p>
 
