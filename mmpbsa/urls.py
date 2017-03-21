@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'^$', index, name='index'),
     # also the home page
     url(r'^index/', index, name='index'),
-    url(r'^parameters', index, name='index'),
+    url(r'^parameters/', index, name='index'),
     # theory page about MMPBSA
     url(r'^theory/', theory, name='theory'),
 

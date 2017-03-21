@@ -11,8 +11,9 @@ And define the required parameters.
 </p>
 
 <form action="/mmpbsa/parameters" method="post">
-    {% csrf_token %}
-    {{ form }}
+
+    {% load crispy_forms_tags %}
+    {% crispy form %}
 
     <input type="submit" value="Submit" />
 </form>

@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 # Create your views here.
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-
+import crispy_forms
 from .forms import *
 
 import sys
@@ -12,20 +12,30 @@ TEMPLATE_PATH = '/home/liangzhen/webserver/mulab/mmpbsa/templates/'  # use your 
 if TEMPLATE_PATH not in sys.path:
     sys.path.append(TEMPLATE_PATH)
 
+def handle_uploaded_file(f, newname):
+    with open(newname, 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+
 def index(request):
     #request.POST.ff
     if request.method == "POST" :
-        form = ParametersForm(request.POST, request.FILE,
-        initial={'pdie':'4.0','saltconc':"0.15", 'ligand':"SUB"}
-        )
+        print "HEHE"
+        form = ParametersForm(request.POST)
         if form.is_valid() :
-            newdoc = form.FileField['docfile']
-            print("Upload File "+newdoc)
+            print("VALID")
+            #handle_uploaded_file(request.FILES['docfile'], './uploaded.txt')
+            print("Upload File uploaded.txt ")
             dataset = form.cleaned_data
-            dataset['url'] = "http://127.0.0.1:8001/mmpbsa/results/"
+            #dataset['docfile'] = 'uploaded.txt'
+            dataset['url'] = "http://127.0.0.1:8001/mmpbsa/results/jobid"
             #return render(request, 'parameters.html',{'pdie':pdie, 'saltconc':saltconc, "ligand":ligand})
             return render(request, 'parameters.html', dataset)
+        else :
+            print "Not Valid"
+            return render(request, "index.html",{'form':form})
     else :
+        print("DO SOMETHING")
         form = ParametersForm()
 
     return render(request, "index.html",{'form':form})
